@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      crossorigin="anonymous"
+    />
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <link rel="stylesheet" href="src/styles.css" />
+    <title>To Do List</title>
+  </head>
+
+  <body>
+
+    <div id="myDIV" class="header container">
+      <div class="row">
+      <div class="clear">
+        <i class="fa fa-refresh"></i>
+      </div>
+    <h2>Your to-do list never sleeps!</h2>
+    <div id="date"></div>
+  </div>
+
+    <div class="row">
+      <form id="todoForm">
+          <input class="col-9" type="text" id="myInput" placeholder="Adding to my list...">
+          <span class="addBtn col-2">ADD</span>
+      </form>
+    </div>
+
+      <div class="row third">
+      <div class="select">
+        <select name="todos" class="filter_todo">
+           <option value="all">All to-dos</option>
+           <option value="completed">Completed</option>
+           <option value="uncompleted">Uncompleted</option>
+       </select>
+   </div>
+ </div>
+    </div>
+
+    <div class="container">
+      <ul id="myUL">
+      </ul>
+      <span class="clearBtn">CLEAR LIST</span>
+    </div>
+
+    <script src="src/index.js"></script>
+  </body>
+</html>
