@@ -24,10 +24,9 @@ section {
 body {
   line-height: 1;
 }
-ol,
-/* ul {
+ol,ul {
   list-style: none;
-} */
+}
 blockquote,
 q {
   quotes: none;
@@ -120,6 +119,8 @@ ul li:hover {
   background: #ddd;
 }
 
+
+/* NOT NEEDED */
 ul li.checked {
   background: #888;
   color: #fff;

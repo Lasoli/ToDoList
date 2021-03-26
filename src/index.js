@@ -21,6 +21,29 @@ const clearButton = document.querySelector('.clearBtn');
 const todoList = document.querySelector('#myUL');
 //const filterOption = document.querySelector('.filter_todo');
 let isEditable = false;
+// let isDone = false;
+// todo = [todo1, todo2, todo3 ]
+let todos = [];
+// todo1 = {
+//   id: 'hadfkjhdjksf',
+//   title: 'my todo',
+//   isEditable: true,
+//   isDone: false
+// }
+
+// todo2 = {
+//   id: 'sufhdkgjh',
+//   title: 'my todo',
+//   isEditable: true,
+//   isDone: false
+// }
+
+// todo3 = {
+//   id: 'hetheht',
+//   title: 'my todo',
+//   isEditable: true,
+//   isDone: false
+// }
 
 //get current date
 // const d = new Date();
@@ -28,63 +51,140 @@ let isEditable = false;
 // document.querySelector("#date").innerHTML = days[d.getDay()+','+d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()];
 //
 
-//template
-const render = () => {
-  const template = `<li class="todoInput"><p contenteditable=${isEditable}>${todoInput.value}</p><span class='delete'>[X]</span></li>`;
-todoList.innerHTML += template;
+//template, function render
+// const render = () => {
+//   const template = `<li class="todoInput"><p contenteditable=${isEditable}>${todoInput.value}</p><span class='delete'>[X]</span></li>`;
+// todoList.innerHTML += template;
+// };
+
+
+function render() {
+  // we rerender all out list and items
+  // todo so, we need to clear all our items first
+  clearElements();
+
+  todos.forEach((todo) => {
+    // if isDone=true, icontenteditable = false
+    // if isDone=false, icontenteditable = true
+    const template = `
+    <li class="todoInput" data-id=${todo.id}>
+      <p contenteditable=true>
+        <input type='checkbox' checkbox=${todo.isDone} />
+        ${todo.title}
+        </p>
+        <button class="delete">delete</button>
+      </li>
+    `;
+    // fancier way to append element at the end of the list
+    // https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML
+    todoList.insertAdjacentHTML("beforeend", template);
+  });
 };
 
 
 //function newElement
-const newElement = (event) => {
+const addNewTodo = (event) => {
   //if missing input
   if(todoInput.value === ""){
     return null};
-  render();
+//adding ID to newElement
+const newTodo = {
+    id: (Date.now() + Math.random()).toString(),
+    title: todoInput.value,
+    isEditable: true,
+    isDone: false
+  };
+//add todo to todo array
+  todos.push(newTodo);
+    render();
   };
 
 
-// Event listeners
+// Click Event listener newElement
 addButton.addEventListener("click", (event) => {
   event.preventDefault();
-  newElement();
+  addNewTodo();
   todoInput.value = "";
 });
 
-//function removeLi
-const removeLi = (event) => {
-   while (todoList.hasChildNodes()) {
-     todoList.removeChild(todoList.firstChild);
-   }
- };
-
-clearButton.addEventListener("click", removeLi);
-
 
 //function deleteItem
-const deleteElement = (targetItem) => {
-  todoList.removeChild(targetItem.parentElement);
+const deleteElement = (clickedItem) => {
+  const clickedItemId = clickedItem.parentElement.dataset.id;
+  // const currTodo = todos.find((todo) => clickedItemId === todo.id);
+  var newTodos = todos.filter((todo, index) => {
+    return todo.id !== clickedItemId;
+  });
+  todos = newTodos;
+  render();
+//todoList.removeChild(clickedItem.parentElement);
 };
 
-todoList.addEventListener("click", (event) => {
-  const clickedEl = event.target;
-  if (clickedEl.classList.contains("delete")) {
-    deleteElement(clickedEl);
-}});
-
-
-  //function editTask
-  const editTask = (clickedEl) => {
-    isEditable = true;
-    render();
+// remove all items from todos
+// render() or listEL.innerHTML = "";
+clearButton.onclick = () => {
+  while (todos.length > 0) {
+    todos.pop();
   };
+  clearElements();
+};
+
+function clearElements() {
+  todoList.innerHTML = "";
+};
+// OR
+// const removeLi = (event) => {
+//    while (todoList.hasChildNodes()) {
+//      todoList.removeChild(todoList.firstChild);
+//    }
+//  };
+//
+// clearButton.addEventListener("click", removeLi);
+
+
+//function edit when clicking on to-do
+todoList.addEventListener("click", (event) => {
+  const clickedItem = event.target;
+  if (clickedItem.classList.contains("delete")) {
+    deleteElement(clickedItem);
+}
+  // if I click on text to edit:
+  if (clickedItem.tagName.toLowerCase() === "p") {
+    clickedItem.onkeydown = (event) => {
+      // Save on return to prevent default behavious
+      if (event.key === "Enter") {
+        event.preventDefault(); // prevents line breaks
+        const newText = clickedItem.textContent;
+
+        // if the new text I write is less then 2 char
+        // don't modify it
+        if (clickedItem.textContent.trim().length < 2) {
+          return alert("To-do item cannot be empty or less then two characters.");
+        }
+
+        // find data-id from clicked html item
+        const clickedItemId = clickedItem.parentElement.dataset.id;
+        // find current todo obj based on id
+        const currTodo = todos.find((todo) => clickedItemId === todo.id);
+        // update clicked todo title with edited text
+        currTodo.title = newText;
+        // update isEditable property for our curent todo Item
+        // contenteditable=false
+        currTodo.isEditable = false;
+        render();
+      }
+    };
+  };
+});
+
+const isDone = () => {
+     return todoInput.style.textDecoration='line-through'
+};
 
   //function filterTodo
  //  function filterTodo() {
  //   //xx
  // };
-
-
 
  /*
    function newElement() {
@@ -132,3 +232,45 @@ todoList.addEventListener("click", (event) => {
 
 
 // 3_ Edit Item
+// HTML
+// add contenteditable
+// add checkbox input with isDone
+// add data-id with id from todo
+// render the temp;ate based on todos array items
+
+// EDIT
+// listen to p tab event
+// listen to onkeydown 'ENTER'
+// if modified text is smaller the 2 chars, return
+// update title and isEditable property of the currentTodo
+// re-render
+
+// DATA STRUCTURE
+// create an array for contain all our todos
+// make each todo an obj with id, title, isEditable, isDone properties
+// push new todo to array
+
+// Still To be done:
+// remove todo from array
+// clear all todo from todos array
+
+// IS DONE:
+// add class to the li based on if isDone or not.
+// if isDone: gray out or strike out your todo
+// if isDone: update todo.isDone and be sure to re-render it with checkbox checked
+// 1_ while listening to the click on your ul list, check if the clickedItem.toLowerCase() === 'input
+// 2_ grab the clickedItem DOM element (i.e. clickedItem.parentElement)
+// 3_ grab the clickedItemId (check your edit function! We need to do exactly the same!)
+// 4_ find the todo.id that has same id of clickedItemId (check your edit function! We need to do exactly the same!)
+// 5_ check if the clickedItem ischecked (https://www.w3schools.com/jsref/prop_checkbox_checked.asp)
+// 4_ if clickedItem is checked, assign todo.isDone === true and todo.isEditable === false
+// 5_ if clickedItem is not checked, assign todo.isDone === false
+// 6_ don't forget to re render() your list!
+// 7_ add class to the li based on if isDone or not: gray out or strike out your todo
+
+
+// MORE:
+// FILTER:
+// add 2 button: completed and active
+// when click on completed: show just todo with isDone === true
+// when click on active: show just todo with isDone === false
