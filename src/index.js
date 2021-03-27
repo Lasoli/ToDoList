@@ -22,10 +22,25 @@ const todoList = document.querySelector('#myUL');
 //const filterOption = document.querySelector('.filter_todo');
 
 //let isEditable = false;
-
+//get current date
+n =  new Date();
+y = n.getFullYear();
+m = n.getMonth() + 1;
+d = n.getDate();
+var weekday = new Array(7);
+weekday[0] = "Sunday";
+weekday[1] = "Monday";
+weekday[2] = "Tuesday";
+weekday[3] = "Wednesday";
+weekday[4] = "Thursday";
+weekday[5] = "Friday";
+weekday[6] = "Saturday";
+var t = weekday[n.getDay()];
+document.getElementById("date").innerHTML = t + ' ' + m + "/" + d + "/" + y;
 // let isDone = false;
 // todo = [todo1, todo2, todo3 ]
-let todos = [];
+let todos = JSON.parse(localStorage.getItem("todos")) || [];
+render();
 // todo1 = {
 //   id: 'hadfkjhdjksf',
 //   title: 'my todo',
@@ -47,21 +62,7 @@ let todos = [];
 //   isDone: false
 // }
 
-//get current date
-n =  new Date();
-y = n.getFullYear();
-m = n.getMonth() + 1;
-d = n.getDate();
-var weekday = new Array(7);
-weekday[0] = "Sunday";
-weekday[1] = "Monday";
-weekday[2] = "Tuesday";
-weekday[3] = "Wednesday";
-weekday[4] = "Thursday";
-weekday[5] = "Friday";
-weekday[6] = "Saturday";
-var t = weekday[n.getDay()];
-document.getElementById("date").innerHTML = t + ' ' + m + "/" + d + "/" + y;
+
 
 //template, function render
 // const render = () => {
@@ -79,7 +80,7 @@ function render() {
     // if isDone=true, icontenteditable = false
     // if isDone=false, icontenteditable = true
     const template = `
-    <li class='${todo.isDone ? "lineThrough todoInput" : "todoInput"}' data-id=${todo.id}>
+    <li class='${todo.isDone ? "lineThrough" : ""}' data-id=${todo.id}>
 <input type='checkbox' ${todo.isDone ? "checked" : null} />
       <p contenteditable='${!todo.isDone}'>
         ${todo.title}
@@ -108,7 +109,8 @@ const newTodo = {
   };
 //add todo to todo array
   todos.push(newTodo);
-    render();
+  save();
+  render();
   };
 //END
 
@@ -128,6 +130,7 @@ const deleteElement = (clickedItem) => {
     return todo.id !== clickedItemId;
   });
   todos = newTodos;
+  save();
   render();
 //todoList.removeChild(clickedItem.parentElement);
 };
@@ -139,14 +142,16 @@ clearButton.onclick = () => {
   while (todos.length > 0) {
     todos.pop();
   };
-  clearElements();
+  // clearElements();
+  todos = [];
+  save();
+  render();
 };
 
 //FUNCTION clear all
 function clearElements() {
   todoList.innerHTML = "";
 };
-//END
 
 // OR
 // const removeLi = (event) => {
@@ -175,8 +180,8 @@ todoList.addEventListener("click", (event) => {
         // if the new text I write is less then 2 char
         // don't modify it
         if (clickedItem.textContent.trim().length < 2) {
-          return alert("To-do item cannot be empty or less then two characters.");
-        }
+          return alert("To-do item cannot be empty or less than two characters.");
+        };
 
         // find data-id from clicked html item
         const clickedItemId = clickedItem.parentElement.dataset.id;
@@ -187,6 +192,7 @@ todoList.addEventListener("click", (event) => {
         // update isEditable property for our curent todo Item
         // contenteditable=false
         //currTodo.isEditable = false;
+        save();
         render();
       }
     };
@@ -202,13 +208,55 @@ todoList.addEventListener("click", (event) => {
       currTodo.isDone = true;
       //   todo isEditable set to false
       //   re render()
+      save();
       render();
     } else {
       //   todo isDone set to false
       currTodo.isDone = false;
+      save();
       render();
     }
   }
+});
+
+//FUNCTION save to local localStorage
+function save() {
+  localStorage.setItem("todos", JSON.stringify(todos));
+};
+
+// FUNCTION init
+// function init() {
+//   render();
+// }
+
+//FUNCTION nav bar
+let burger = document.getElementById('burger'),
+	 nav    = document.getElementById('main-nav'),
+	 slowmo = document.getElementById('slowmo');
+
+burger.addEventListener('click', function(e){
+	this.classList.toggle('is-open');
+	nav.classList.toggle('is-open');
+});
+
+slowmo.addEventListener('click', function(e){
+	this.classList.toggle('is-slowmo');
+});
+
+/* Onload demo - dirty timeout */
+let clickEvent = new Event('click');
+
+window.addEventListener('load', function(e) {
+	slowmo.dispatchEvent(clickEvent);
+	burger.dispatchEvent(clickEvent);
+
+	setTimeout(function(){
+		burger.dispatchEvent(clickEvent);
+
+		setTimeout(function(){
+			slowmo.dispatchEvent(clickEvent);
+		}, 3500);
+	}, 5500);
 });
 
   //function filterTodo

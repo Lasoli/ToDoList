@@ -10,7 +10,6 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
-    <link href="css/font-awesome.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
     <link rel="stylesheet" href="src/styles.css" />
     <title>To Do List</title>
@@ -19,14 +18,34 @@
   <body>
 
     <div id="myDIV" class="header container bg-black shadow">
+      <div>
+      <button id="burger" class="open-main-nav">
+			<span class="burger"></span>
+			<span class="burger-text">Menu</span>
+		</button>
+		<nav class="main-nav" id="main-nav">
+			<ul>
+				<li>
+					<a href="#">Calender</a>
+				</li>
+				<li>
+					<a href="#">Notes</a>
+				</li>
+				<li>
+					<a href="#">About</a>
+				</li>
+			</ul>
+		</nav>
+  </div>
+
       <div class="row">
-        <div id="date"></div>
+        <div class="col-9" id="date"></div>
     <h2>Daily To-Do List</h2>
   </div>
 
     <div class="row">
       <form id="todoForm">
-          <input class="col-8" type="text" id="myInput" placeholder="e.g. Call mom!">
+          <input class="col-9" type="text" id="myInput" placeholder="e.g. Call mom!">
           <span class="addBtn col-2">ADD</span>
       </form>
     </div>

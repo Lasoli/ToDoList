@@ -59,32 +59,29 @@ body {
   opacity: 0.95;
   padding: 30px 40px;
   color: white;
-    text-align: center;
+  text-align: center;
 }
 
 .header h2 {
   margin-bottom: 30px;
   font-size: 65px;
   line-height: 55px;
-   font-style:italic;
-text-shadow: -15px 5px 25px #ced0d3;
-letter-spacing: -0.12em;
-font-family: 'Anton', Arial, sans-serif;
-text-transform: uppercase;
+  font-style: italic;
+  text-shadow: -15px 5px 25px #ced0d3;
+  letter-spacing: -0.12em;
+  font-family: Arial, sans-serif;
+  text-transform: uppercase;
 }
 
 .header #date {
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   font-size: 13px;
+  padding: 0;
 }
 
-/*
-.header:after {
-  content: "";
-  display: table;
-  clear: both;
+#todoForm {
+  padding: 0;
 }
-*/
 
 input {
   margin: 0;
@@ -94,7 +91,11 @@ input {
   padding: 10px;
   float: left;
   font-size: 13px;
-      box-shadow: 2px 2px 0 black, 2px 2px 10px black;
+  box-shadow: 2px 2px 0 black, 2px 2px 10px black;
+}
+
+#myInput {
+  margin-right: 0;
 }
 
 .third {
@@ -107,7 +108,12 @@ ul li {
   padding: 12px 8px 37px 40px;
   background: #F5FFFA;
   font-size: 18px;
-  transition: 0.2s;
+  transition: 0.4s;
+  letter-spacing: 1px;
+  font-weight: bold;
+  text-shadow: -15px 5px 25px #ced0d3;
+  font-family:  Courier New, monospace;
+  box-shadow: 0px 1px 0 darkgrey, 6px 10px 20px black;
   /* -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -120,7 +126,11 @@ cursor: pointer;
  /* top: 50%;
  right: 0%; */
  /* padding: 12px 40px; */
- transform: translate(0%, -50%);
+ /* transform: translate(0%, -50%); */
+}
+
+ul li input {
+cursor: pointer;
 }
 
 ul li:nth-child(odd) {
@@ -131,44 +141,9 @@ ul li:hover {
   background: #ddd;
 }
 
-
-/* NOT NEEDED */
-/* ul li.checked {
-  background: #888;
-  color: #fff;
-  text-decoration: line-through;
-}
-
-ul li.checked::before {
-  content: '';
-  position: absolute;
-  border-color: #fff;
-  border-style: solid;
-  border-width: 0 2px 2px 0;
-  top: 10px;
-  left: 16px;
-  transform: rotate(45deg);
-  height: 15px;
-  width: 7px;
-} */
-/*
-.close {
-  cursor: pointer;
-   position: absolute;
-   top: 50%;
-   right: 0%;
-   padding: 12px 16px;
-   transform: translate(0%, -50%);
-}
-
-.close:hover {
-  background-color: #f44336;
-  color: white;
-}
-*/
-
 .addBtn {
-  padding: 11px;
+  padding: 10px;
+  margin-left: 3px;
   background: #8FBC8F;
   border: 2px solid grey;
   box-shadow: 0px 2px 0 black, 2px 5px 5px black;
@@ -176,7 +151,7 @@ ul li.checked::before {
   transition: all 150ms linear;
   color: black;
   float: right;
-  min-width: 50px;
+  min-width: 48px;
   font-size: 13px;
   font-weight: 900;
   cursor: pointer;
@@ -191,11 +166,12 @@ ul li.checked::before {
 
 .clearBtn {
   padding: 11px;
-  margin: 0 40px;
+  margin: 15px 25px;
   background: #d9d9d9;
   color: #555;
   float: right;
   font-size: 13px;
+  font-weight: 900;
   cursor: pointer;
   transition: 0.3s;
   border-radius: 100px;
@@ -204,39 +180,36 @@ ul li.checked::before {
 }
 
 .clearBtn:hover {
-  background-color: #bbb;
-    box-shadow: 2px 2px 0 black, 5px 5px 10px black;
+  background-color: darkgrey;
+  box-shadow: 2px 2px 0 black, 5px 5px 10px black;
 }
 
 /* STYLING DROPDOWN */
 select{
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    outline: none;
-    border: none;
-    float: center;
+  /* -webkit-appearance: none;
+  -moz-appearance: none; */
+  appearance: none;
+  outline: none;
+  border: none;
+  float: center;
   position: relative;
-}
-select{
-    color: #8FBC8F;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 10px;
-    background: none;
-    border: 1px solid darkgrey;
-    color: darkgrey;
+  color: #8FBC8F;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 10px;
+  background: none;
+  border: 1px solid darkgrey;
+  color: darkgrey;
 }
 
 .select::after{
     position: relative;
     color: #8FBC8F;
-    pointer-events: none;
+    /* pointer-events: none; */
 }
 .select:hover::after{
    color: #583429;
 }
-
 
 .lineThrough {
   text-decoration: line-through;
@@ -246,7 +219,7 @@ select{
   padding: 5px;
   margin: 0;
   float: right;
-  position: relative;
+  /* position: relative; */
   background: #d9d9d9;
   color: #555;
   font-size: 13px;
@@ -257,10 +230,175 @@ select{
   box-shadow: 0px 2px 0 black, 2px 5px 5px black;
 }
 
-.todoInput {
-  font-size: 20px;
-  letter-spacing: -1px;
-  font-weight: bold;
-text-shadow: -15px 5px 25px #ced0d3;
-font-family:  Courier New, monospace;
+.delete:hover {
+  background-color: darkgrey;
+}
+
+/* NAVBAR */
+.main-nav {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    text-align: center;
+    background: #FFF;
+    opacity: 0;
+    z-index: -1;
+    visibility: hidden;
+    transition: all .375s;
+}
+
+.main-nav.is-open {
+    opacity: 1;
+    z-index: 100;
+    visibility: visible;
+}
+
+/* Green band effect */
+.main-nav::before {
+	 content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: -15px;
+    background: #8FBC8F;
+    transform-origin: 0 0;
+    transform: skew(-14deg) translateX(-120%);
+    transition: all .275s .1s;
+}
+
+.main-nav.is-open::before {
+    transform: skew(-14deg) translateX(0);
+}
+
+/* Skewing effect on menu links */
+.main-nav ul {
+    display: inline-flex;
+    flex-direction: column;
+    height: 93%; /* Should be 100%, but we have a notice message :D */
+    align-items: flex-end;
+    justify-content: center;
+    transform: translateX(-18%) skew(-16deg);
+}
+
+.main-nav li {
+    display: block;
+    margin: 10px 50px;
+    text-align: right;
+    transform: skew(16deg);
+}
+
+/* Apparition effect on links */
+.main-nav a {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.main-nav.is-open a {
+    opacity: 1;
+    transform: translateY(0);
+}
+.main-nav li:nth-child(1) a {
+	transition: all 275ms 175ms
+}
+.main-nav li:nth-child(2) a {
+	transition: all 275ms 225ms
+}
+.main-nav li:nth-child(3) a {
+	transition: all 275ms 275ms
+}
+.main-nav li:nth-child(4) a {
+	transition: all 275ms 325ms
+}
+.main-nav li:nth-child(5) a {
+	transition: all 275ms 375ms
+}
+
+
+/* Decoration */
+.main-nav ul,
+.main-nav li {
+	list-style: none;
+	padding: 10px;
+  border-radius: 40px;
+}
+.main-nav a {
+	display: block;
+	padding: 12px 0;
+	color: #5A3B5D;
+	font-size: 30px;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+/* Burger Style: @see: https://codepen.io/CreativeJuiz/full/oMZNXy */
+.open-main-nav {
+	position: absolute;
+	top: 15px;
+	padding-top: 20px;
+  margin-bottom: 20px;
+	right: 15px;
+	z-index: 1000;
+	background: none;
+	border: 0;
+	cursor: pointer;
+}
+.open-main-nav:focus {
+	outline: none;
+}
+.burger {
+	position: relative;
+	display: block;
+	width: 28px;
+	height: 4px;
+	margin: 0 auto;
+	background: white;
+	transform: skew(5deg);
+	transition: all .275s;
+}
+
+.burger:after,
+.burger:before {
+	content: '';
+	display: block;
+	height: 100%;
+	background: white;
+	transition: all .275s;
+}
+
+.burger:after {
+	transform: translateY(-12px) translateX(-2px) skew(-20deg);
+}
+
+.burger:before {
+	transform: translateY(-16px) skew(-10deg);
+}
+
+/* Toggle State part */
+.is-open .burger {
+	transform: skew(5deg) translateY(-8px) rotate(-45deg);
+}
+
+.is-open .burger:before {
+	transform: translateY(0px) skew(-10deg) rotate(75deg);
+}
+
+.is-open .burger:after {
+	transform: translateY(-12px) translateX(10px) skew(-20deg);
+    opacity: 0;
+}
+
+/* MENU Text part */
+
+.burger-text {
+	display: block;
+	font-size: 11px;
+	letter-spacing: .05em;
+	margin-top: .5em;
+	text-transform: uppercase;
+	font-weight: 200;
+	text-align: center;
+	color: white;
 }
