@@ -256,3 +256,11 @@ select{
   border: 1px solid grey;
   box-shadow: 0px 2px 0 black, 2px 5px 5px black;
 }
+
+.todoInput {
+  font-size: 20px;
+  letter-spacing: -1px;
+  font-weight: bold;
+text-shadow: -15px 5px 25px #ced0d3;
+font-family:  Courier New, monospace;
+}

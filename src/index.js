@@ -69,7 +69,7 @@ document.getElementById("date").innerHTML = t + ' ' + m + "/" + d + "/" + y;
 // todoList.innerHTML += template;
 // };
 
-
+// FUNCTION render
 function render() {
   // we rerender all out list and items
   // todo so, we need to clear all our items first
@@ -79,13 +79,12 @@ function render() {
     // if isDone=true, icontenteditable = false
     // if isDone=false, icontenteditable = true
     const template = `
-    <li class="todoInput" data-id=${todo.id}>
+    <li class='${todo.isDone ? "lineThrough todoInput" : "todoInput"}' data-id=${todo.id}>
+<input type='checkbox' ${todo.isDone ? "checked" : null} />
       <p contenteditable='${!todo.isDone}'>
-        <input type='checkbox' checkbox=${todo.isDone} />
         ${todo.title}
         </p>
             <button class="delete">delete</button>
-
       </li>
     `;
     // fancier way to append element at the end of the list
@@ -93,9 +92,9 @@ function render() {
     todoList.insertAdjacentHTML("beforeend", template);
   });
 };
+//END
 
-
-//function newElement
+//FUNCTION newElement
 const addNewTodo = (event) => {
   //if missing input
   if(todoInput.value === ""){
@@ -104,14 +103,14 @@ const addNewTodo = (event) => {
 const newTodo = {
     id: (Date.now() + Math.random()).toString(),
     title: todoInput.value,
-    isEditable: true,
+  //  isEditable: true,
     isDone: false
   };
 //add todo to todo array
   todos.push(newTodo);
     render();
   };
-
+//END
 
 // Click Event listener newElement
 addButton.addEventListener("click", (event) => {
@@ -121,7 +120,7 @@ addButton.addEventListener("click", (event) => {
 });
 
 
-//function deleteItem
+//FUNCTION deleteItem
 const deleteElement = (clickedItem) => {
   const clickedItemId = clickedItem.parentElement.dataset.id;
   // const currTodo = todos.find((todo) => clickedItemId === todo.id);
@@ -132,6 +131,7 @@ const deleteElement = (clickedItem) => {
   render();
 //todoList.removeChild(clickedItem.parentElement);
 };
+//END
 
 // remove all items from todos
 // render() or listEL.innerHTML = "";
@@ -142,9 +142,12 @@ clearButton.onclick = () => {
   clearElements();
 };
 
+//FUNCTION clear all
 function clearElements() {
   todoList.innerHTML = "";
 };
+//END
+
 // OR
 // const removeLi = (event) => {
 //    while (todoList.hasChildNodes()) {
@@ -155,7 +158,7 @@ function clearElements() {
 // clearButton.addEventListener("click", removeLi);
 
 
-//function edit when clicking on to-do
+//FUNCTION edit when clicking on to-do
 todoList.addEventListener("click", (event) => {
   const clickedItem = event.target;
   if (clickedItem.classList.contains("delete")) {
@@ -183,11 +186,29 @@ todoList.addEventListener("click", (event) => {
         currTodo.title = newText;
         // update isEditable property for our curent todo Item
         // contenteditable=false
-        currTodo.isEditable = false;
+        //currTodo.isEditable = false;
         render();
       }
     };
   };
+  // LISTEN TO CLICK ON INPUT
+  if (clickedItem.tagName.toLowerCase() === "input") {
+    // WARNING: This is just guideline, doesn't mean it will work out of the box
+    // fill in, try it out, check for errors on the console, console.log, ...
+    const clickedItemId = clickedItem.parentElement.dataset.id;
+    const currTodo = todos.find((todo) => clickedItemId === todo.id);
+    if (clickedItem.checked) {
+      //   todo isDone set to true
+      currTodo.isDone = true;
+      //   todo isEditable set to false
+      //   re render()
+      render();
+    } else {
+      //   todo isDone set to false
+      currTodo.isDone = false;
+      render();
+    }
+  }
 });
 
   //function filterTodo
@@ -200,13 +221,16 @@ todoList.addEventListener("click", (event) => {
  //      return todoInput.style.textDecoration='line-through'
  // };
 
- const checkedItems = ({target}) => {
-   if(target.matches("input[type=checkbox]")){
-     target.closest("li").classList.toggle("lineThrough", target.checked);
-   }
- };
 
- todoList.addEventListener("change", checkedItems, false);
+// LINETHROUGH BY ADDING CLASS
+ // const checkedItems = ({target}) => {
+ //   if(target.matches("input[type=checkbox]")){
+ //     target.closest("li").classList.toggle("lineThrough", target.checked);
+ //   }
+ // };
+ //
+ // todoList.addEventListener("change", checkedItems, false);
+// END
 
 
  /*
