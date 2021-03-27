@@ -26,6 +26,7 @@ body {
 }
 ol,ul {
   list-style: none;
+  padding-left: 0;
 }
 blockquote,
 q {
@@ -54,18 +55,27 @@ body {
 
 .header {
   background-color: #2E8B57;
+  background-image: linear-gradient(to bottom right, black, red);
+  opacity: 0.95;
   padding: 30px 40px;
   color: white;
     text-align: center;
 }
 
-.header #date {
+.header h2 {
   margin-bottom: 30px;
+  font-size: 65px;
+  line-height: 55px;
+   font-style:italic;
+text-shadow: -15px 5px 25px #ced0d3;
+letter-spacing: -0.12em;
+font-family: 'Anton', Arial, sans-serif;
+text-transform: uppercase;
 }
 
-
-#date {
-
+.header #date {
+  margin-bottom: 30px;
+  font-size: 13px;
 }
 
 /*
@@ -78,11 +88,13 @@ body {
 
 input {
   margin: 0;
-  border: none;
-  border-radius: 100px;
+  margin-right: 12px;
+  border: 2px solid grey;
+  border-radius: 5px;
   padding: 10px;
   float: left;
   font-size: 13px;
+      box-shadow: 2px 2px 0 black, 2px 2px 10px black;
 }
 
 .third {
@@ -91,23 +103,23 @@ input {
 /* To do list CSS */
 ul li {
   cursor: pointer;
-  position: relative;
-  padding: 12px 8px 12px 40px;
+  /* position: relative; */
+  padding: 12px 8px 37px 40px;
   background: #F5FFFA;
   font-size: 18px;
   transition: 0.2s;
-  -webkit-user-select: none;
+  /* -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none;
+  user-select: none; */
 }
 
 ul li span {
 cursor: pointer;
- position: absolute;
- top: 50%;
- right: 0%;
- padding: 12px 40px;
+ /* position: absolute; */
+ /* top: 50%;
+ right: 0%; */
+ /* padding: 12px 40px; */
  transform: translate(0%, -50%);
 }
 
@@ -121,7 +133,7 @@ ul li:hover {
 
 
 /* NOT NEEDED */
-ul li.checked {
+/* ul li.checked {
   background: #888;
   color: #fff;
   text-decoration: line-through;
@@ -138,7 +150,7 @@ ul li.checked::before {
   transform: rotate(45deg);
   height: 15px;
   width: 7px;
-}
+} */
 /*
 .close {
   cursor: pointer;
@@ -157,20 +169,26 @@ ul li.checked::before {
 
 .addBtn {
   padding: 11px;
-  margin-left: 10px;
-  background: lightgreen;
-  color: #555;
+  background: #8FBC8F;
+  border: 2px solid grey;
+  box-shadow: 0px 2px 0 black, 2px 5px 5px black;
+  letter-spacing: 1px;
+  transition: all 150ms linear;
+  color: black;
   float: right;
-  min-width: 45px;
+  min-width: 50px;
   font-size: 13px;
+  font-weight: 900;
   cursor: pointer;
   transition: 0.3s;
-  border-radius: 100px;
+  border-radius: 40px;
 }
 
 .addBtn:hover {
-  background-color: #8FBC8F;
+  background-color: darkgrey;
+  box-shadow: 2px 2px 0 black, 5px 5px 10px black;
 }
+
 .clearBtn {
   padding: 11px;
   margin: 0 40px;
@@ -181,10 +199,13 @@ ul li.checked::before {
   cursor: pointer;
   transition: 0.3s;
   border-radius: 100px;
+  border: 1px solid grey;
+  box-shadow: 0px 2px 0 black, 2px 5px 5px black;
 }
 
 .clearBtn:hover {
   background-color: #bbb;
+    box-shadow: 2px 2px 0 black, 5px 5px 10px black;
 }
 
 /* STYLING DROPDOWN */
@@ -198,7 +219,7 @@ select{
   position: relative;
 }
 select{
-    color: grey;
+    color: #8FBC8F;
     cursor: pointer;
     padding: 10px;
     border-radius: 10px;
@@ -206,11 +227,32 @@ select{
     border: 1px solid darkgrey;
     color: darkgrey;
 }
+
 .select::after{
     position: relative;
-    color: #c065c0;
+    color: #8FBC8F;
     pointer-events: none;
 }
 .select:hover::after{
    color: #583429;
+}
+
+
+.lineThrough {
+  text-decoration: line-through;
+}
+
+.delete {
+  padding: 5px;
+  margin: 0;
+  float: right;
+  position: relative;
+  background: #d9d9d9;
+  color: #555;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 100px;
+  border: 1px solid grey;
+  box-shadow: 0px 2px 0 black, 2px 5px 5px black;
 }

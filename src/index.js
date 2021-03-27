@@ -20,7 +20,9 @@ const addButton = document.querySelector('.addBtn');
 const clearButton = document.querySelector('.clearBtn');
 const todoList = document.querySelector('#myUL');
 //const filterOption = document.querySelector('.filter_todo');
-let isEditable = false;
+
+//let isEditable = false;
+
 // let isDone = false;
 // todo = [todo1, todo2, todo3 ]
 let todos = [];
@@ -46,10 +48,20 @@ let todos = [];
 // }
 
 //get current date
-// const d = new Date();
-// const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-// document.querySelector("#date").innerHTML = days[d.getDay()+','+d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()];
-//
+n =  new Date();
+y = n.getFullYear();
+m = n.getMonth() + 1;
+d = n.getDate();
+var weekday = new Array(7);
+weekday[0] = "Sunday";
+weekday[1] = "Monday";
+weekday[2] = "Tuesday";
+weekday[3] = "Wednesday";
+weekday[4] = "Thursday";
+weekday[5] = "Friday";
+weekday[6] = "Saturday";
+var t = weekday[n.getDay()];
+document.getElementById("date").innerHTML = t + ' ' + m + "/" + d + "/" + y;
 
 //template, function render
 // const render = () => {
@@ -68,11 +80,12 @@ function render() {
     // if isDone=false, icontenteditable = true
     const template = `
     <li class="todoInput" data-id=${todo.id}>
-      <p contenteditable=true>
+      <p contenteditable='${!todo.isDone}'>
         <input type='checkbox' checkbox=${todo.isDone} />
         ${todo.title}
         </p>
-        <button class="delete">delete</button>
+            <button class="delete">delete</button>
+
       </li>
     `;
     // fancier way to append element at the end of the list
@@ -177,14 +190,24 @@ todoList.addEventListener("click", (event) => {
   };
 });
 
-const isDone = () => {
-     return todoInput.style.textDecoration='line-through'
-};
-
   //function filterTodo
  //  function filterTodo() {
  //   //xx
  // };
+
+
+ // const isDone = () => {
+ //      return todoInput.style.textDecoration='line-through'
+ // };
+
+ const checkedItems = ({target}) => {
+   if(target.matches("input[type=checkbox]")){
+     target.closest("li").classList.toggle("lineThrough", target.checked);
+   }
+ };
+
+ todoList.addEventListener("change", checkedItems, false);
+
 
  /*
    function newElement() {
